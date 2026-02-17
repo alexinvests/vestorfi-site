@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VestorFi | Real Estate By You, Capital By Us</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1240e8;
+    --blue-light: #3b63f5;
+    --blue-dark: #0a2db8;
+    --blue-glow: rgba(18, 64, 232, 0.25);
+    --green: #1a8a3f;
+    --green-light: #25b254;
+    --green-dark: #126b2e;
+    --green-glow: rgba(26, 138, 63, 0.2);
+    --midnight: #060b18;
+    --navy: #0c1225;
+    --slate: #151d35;
+    --steel: #243052;
+    --muted: #8a95b0;
+    --light: #d8dff0;
+    --white: #f0f4ff;
+    --font-display: 'Outfit', -apple-system, sans-serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--midnight); color: var(--light); line-height: 1.6; overflow-x: hidden; }
+
+  /* ═══ NAV ═══ */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; background: rgba(6,11,24,0.88); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(18,64,232,0.1); transition: all 0.3s; }
+  .logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.25s; }
+  .nav-links a:hover { color: var(--blue-light); }
+  .nav-cta { background: var(--blue) !important; color: var(--white) !important; padding: 0.6rem 1.5rem; border-radius: 8px; font-weight: 700 !important; transition: all 0.2s !important; }
+  .nav-cta:hover { background: var(--blue-light) !important; transform: translateY(-1px); box-shadow: 0 4px 20px var(--blue-glow); }
+
+  /* ═══ HERO ═══ */
+  .hero { min-height: auto; display: flex; align-items: center; justify-content: center; text-align: center; padding: 7rem 2rem 2rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -50%; left: -30%; width: 160%; height: 160%; background: radial-gradient(ellipse at 30% 40%, rgba(18,64,232,0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, rgba(26,138,63,0.05) 0%, transparent 45%); pointer-events: none; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(18,64,232,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(18,64,232,0.04) 1px, transparent 1px); background-size: 70px 70px; mask-image: radial-gradient(ellipse at center, black 25%, transparent 65%); -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 65%); }
+  .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: float 12s ease-in-out infinite; }
+  .orb-1 { width: 400px; height: 400px; background: rgba(18,64,232,0.12); top: 10%; left: -5%; }
+  .orb-2 { width: 300px; height: 300px; background: rgba(26,138,63,0.08); bottom: 15%; right: -5%; animation-delay: -4s; }
+  @keyframes float { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
+  .hero-content { position: relative; z-index: 2; max-width: 880px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(18,64,232,0.1); border: 1px solid rgba(18,64,232,0.25); padding: 0.5rem 1.25rem; border-radius: 50px; font-size: 0.78rem; font-weight: 700; color: var(--blue-light); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1rem; animation: fadeDown 0.8s ease-out; }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem,6vw,4.5rem); font-weight: 800; line-height: 1.08; margin-bottom: 1.25rem; color: var(--white); animation: fadeDown 0.8s ease-out 0.15s both; }
+  .hero h1 .blue { color: var(--blue-light); }
+  .hero h1 .green { color: var(--green-light); }
+  .hero-sub { font-size: 1.15rem; color: var(--muted); max-width: 600px; margin: 0 auto 1.25rem; animation: fadeDown 0.8s ease-out 0.3s both; line-height: 1.5; }
+  .hero-programs { font-size: 0.82rem; color: var(--light); max-width: 660px; margin: 0 auto 0.4rem; animation: fadeDown 0.8s ease-out 0.38s both; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .hero-programs span { color: var(--blue-light); }
+  .hero-byline { font-size: 0.92rem; color: var(--green-light); font-style: italic; font-weight: 600; margin-bottom: 2rem; animation: fadeDown 0.8s ease-out 0.42s both; }
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeDown 0.8s ease-out 0.5s both; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem; border-radius: 10px; font-family: var(--font-display); font-size: 1rem; font-weight: 700; text-decoration: none; cursor: pointer; border: none; transition: all 0.25s ease; letter-spacing: 0.2px; }
+  .btn-primary { background: var(--blue); color: var(--white); box-shadow: 0 4px 24px var(--blue-glow); }
+  .btn-primary:hover { background: var(--blue-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(18,64,232,0.35); }
+  .btn-green { background: var(--green); color: var(--white); box-shadow: 0 4px 24px var(--green-glow); }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: var(--light); border: 1.5px solid var(--steel); }
+  .btn-outline:hover { border-color: var(--blue); color: var(--blue-light); }
+
+  /* ═══ STATS ═══ */
+  .stats { padding: 2rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; text-align: center; }
+  .stat-item { padding: 1.5rem; border-radius: 14px; background: linear-gradient(165deg, rgba(18,64,232,0.06), rgba(12,18,37,0.5)); border: 1px solid rgba(18,64,232,0.08); }
+  .stat-item h3 { font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; color: var(--blue-light); margin-bottom: 0.25rem; }
+  .stat-item p { color: var(--muted); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  /* ═══ PRODUCTS — 4 across ═══ */
+  .products { padding: 2.5rem 2rem 4rem; max-width: 1300px; margin: 0 auto; }
+  .section-label { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--green-light); margin-bottom: 0.4rem; text-align: center; }
+  .section-title { font-family: var(--font-display); font-size: clamp(1.3rem,2.5vw,1.6rem); font-weight: 600; text-align: center; margin-bottom: 0.6rem; color: var(--muted); }
+  .section-sub { text-align: center; color: var(--muted); max-width: 580px; margin: 0 auto 2.5rem; font-size: 1.05rem; }
+  .product-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
+  .product-card { background: linear-gradient(170deg, var(--navy), var(--slate)); border: 1px solid rgba(18,64,232,0.1); border-radius: 18px; padding: 2rem; position: relative; overflow: hidden; transition: all 0.35s ease; display: flex; flex-direction: column; }
+  .product-card:hover { transform: translateY(-4px); border-color: rgba(18,64,232,0.25); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--blue-glow); }
+  .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--green), var(--blue)); }
+  .product-icon { width: 48px; height: 48px; background: rgba(18,64,232,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.25rem; }
+  .product-card h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .product-card > p { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.25rem; flex-grow: 1; }
+  .highlight-strip { display: flex; margin-bottom: 1.25rem; border-radius: 10px; overflow: hidden; border: 1px solid rgba(18,64,232,0.15); background: rgba(18,64,232,0.05); }
+  .highlight-item { flex: 1; padding: 0.6rem 0.3rem; text-align: center; border-right: 1px solid rgba(18,64,232,0.1); }
+  .highlight-item:last-child { border-right: none; }
+  .highlight-value { display: block; font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: var(--blue-light); }
+  .highlight-label { display: block; font-size: 0.62rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; margin-top: 0.1rem; }
+  .product-features { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.5rem; }
+  .product-features li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.82rem; color: var(--light); line-height: 1.4; }
+  .product-features li::before { content: '✓'; color: var(--green-light); font-weight: 700; font-size: 0.8rem; flex-shrink: 0; margin-top: 1px; }
+  .product-card .btn { width: 100%; justify-content: center; padding: 0.8rem 1rem; font-size: 0.9rem; margin-top: auto; }
+
+  /* ═══ SEE RATES CTA ═══ */
+  .rates-cta { text-align: center; padding: 2rem 2rem 1rem; }
+  .rates-cta-btn { display: inline-flex; flex-direction: column; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--blue-light); transition: all 0.3s ease; cursor: pointer; }
+  .rates-cta-btn:hover { color: var(--green-light); transform: translateY(4px); }
+  .rates-cta-btn span { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; letter-spacing: 0.5px; }
+  .rates-cta-arrow { width: 56px; height: 56px; border-radius: 50%; border: 2.5px solid currentColor; display: flex; align-items: center; justify-content: center; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+  /* ═══ TYPEFORM ═══ */
+  .form-section { padding: 2rem 2rem 3rem; max-width: 700px; margin: 0 auto; }
+  .form-container { background: linear-gradient(170deg, var(--navy), rgba(21,29,53,0.6)); border: 1px solid rgba(18,64,232,0.1); border-radius: 22px; padding: 3rem; position: relative; overflow: hidden; min-height: 360px; }
+  .form-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--blue), var(--green), transparent); }
+  .tf-top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+  .tf-progress { flex: 1; height: 4px; background: var(--steel); border-radius: 4px; overflow: hidden; margin-right: 1rem; }
+  .tf-progress-bar { height: 100%; width: 11%; background: linear-gradient(90deg, var(--blue), var(--green)); border-radius: 4px; transition: width 0.5s cubic-bezier(0.22,1,0.36,1); }
+  .tf-progress-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+  .tf-step { display: none; animation: tfSlideIn 0.4s cubic-bezier(0.22,1,0.36,1); }
+  .tf-step.active { display: block; }
+  @keyframes tfSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .tf-question { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; line-height: 1.3; }
+  .tf-question-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .tf-field input { width: 100%; padding: 0.9rem 1.1rem; background: rgba(6,11,24,0.7); border: 1.5px solid var(--steel); border-radius: 12px; color: var(--white); font-family: var(--font-body); font-size: 1.05rem; transition: border-color 0.25s, box-shadow 0.25s; outline: none; }
+  .tf-field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(18,64,232,0.12); }
+  .tf-field input::placeholder { color: var(--steel); }
+  .tf-input-prefix { display: flex; align-items: stretch; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--steel); background: rgba(6,11,24,0.7); transition: border-color 0.25s, box-shadow 0.25s; }
+  .tf-input-prefix:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(18,64,232,0.12); }
+  .tf-input-prefix > span { display: flex; align-items: center; padding: 0 0.2rem 0 1.1rem; color: var(--muted); font-size: 1.1rem; font-weight: 600; }
+  .tf-input-prefix input { border: none !important; background: transparent !important; box-shadow: none !important; padding-left: 0.3rem; }
+  .tf-options { display: flex; flex-direction: column; gap: 0.65rem; }
+  .tf-options-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+  .tf-options-horizontal { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+  .tf-option { display: flex; align-items: center; gap: 0.85rem; width: 100%; padding: 0.9rem 1.1rem; background: rgba(6,11,24,0.5); border: 1.5px solid var(--steel); border-radius: 12px; cursor: pointer; font-family: var(--font-body); color: var(--light); transition: all 0.2s ease; text-align: left; }
+  .tf-option:hover { border-color: var(--blue); background: rgba(18,64,232,0.05); }
+  .tf-option.selected { border-color: var(--blue); background: rgba(18,64,232,0.1); box-shadow: 0 0 0 3px rgba(18,64,232,0.1); }
+  .tf-option-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .tf-option-text strong { display: block; font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--white); }
+  .tf-option-text small { font-size: 0.78rem; color: var(--muted); }
+  .tf-options-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tf-option-pill { padding: 0.55rem 1rem; background: rgba(6,11,24,0.5); border: 1.5px solid var(--steel); border-radius: 50px; color: var(--light); font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+  .tf-option-pill:hover { border-color: var(--blue); background: rgba(18,64,232,0.05); }
+  .tf-option-pill.selected { border-color: var(--blue); background: var(--blue); color: var(--white); box-shadow: 0 2px 12px var(--blue-glow); }
+  .tf-actions { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; }
+  .tf-enter-hint { font-size: 0.78rem; color: var(--muted); }
+  .tf-enter-hint kbd { background: var(--steel); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: var(--light); }
+  .tf-success { text-align: center; padding: 2rem 0; }
+  .tf-success-check { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--green), var(--green-light)); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; font-weight: 700; margin: 0 auto 1.5rem; animation: tfPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+  @keyframes tfPop { 0% { transform: scale(0); } 80% { transform: scale(1.15); } 100% { transform: scale(1); } }
+  .tf-success h2 { font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
+  .tf-success p { color: var(--muted); font-size: 1rem; max-width: 420px; margin: 0 auto 1.5rem; }
+  .tf-success-details { display: inline-flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+  .tf-success-tag { background: rgba(18,64,232,0.08); border: 1px solid rgba(18,64,232,0.15); border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.82rem; font-weight: 600; color: var(--blue-light); }
+  .tf-field-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--light); margin-bottom: 0.5rem; }
+
+  /* ═══ PROCESS VIDEO ═══ */
+  .process-section { padding: 4rem 2rem; max-width: 900px; margin: 0 auto; }
+  .process-video { margin-top: 1rem; }
+  .process-screen {
+    background: linear-gradient(170deg, var(--navy), var(--slate));
+    border: 1px solid rgba(18,64,232,0.12); border-radius: 22px;
+    padding: 2.5rem; overflow: hidden; position: relative;
+  }
+  .process-screen::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), var(--green)); }
+
+  .scene-step { display: none; animation: tfSlideIn 0.5s cubic-bezier(0.22,1,0.36,1); }
+  .scene-step.active { display: flex; align-items: center; gap: 2.5rem; }
+  .scene-visual { flex: 0 0 280px; }
+  .scene-visual svg { width: 100%; height: auto; }
+  .scene-label { flex: 1; }
+  .scene-num { font-family: var(--font-display); font-size: 0.8rem; font-weight: 800; color: var(--blue-light); background: rgba(18,64,232,0.1); display: inline-block; padding: 0.3rem 0.75rem; border-radius: 6px; margin-bottom: 0.75rem; letter-spacing: 1px; }
+  .scene-label h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
+  .scene-label p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
+  .scene-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(18,64,232,0.08); }
+  .scene-dots { display: flex; gap: 0.5rem; }
+  .scene-dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--steel); background: transparent; cursor: pointer; transition: all 0.25s; padding: 0; }
+  .scene-dot.active { background: var(--blue); border-color: var(--blue); box-shadow: 0 0 8px var(--blue-glow); }
+  .scene-dot:hover { border-color: var(--blue-light); }
+  .scene-nav { display: flex; align-items: center; gap: 1rem; }
+  .scene-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--steel); background: transparent; color: var(--light); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: var(--font-display); }
+  .scene-btn:hover { border-color: var(--blue); color: var(--blue-light); }
+  .scene-counter { font-size: 0.82rem; font-weight: 600; color: var(--muted); font-family: var(--font-display); }
+
+  /* ═══ CARTOON ANIMATIONS ═══ */
+  .bob { animation: bob 2.5s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  .blink { animation: blink 1s ease-in-out infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .pulse-green { animation: pulseG 2s ease-in-out infinite; }
+  @keyframes pulseG { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+  .point { animation: point 2s ease-in-out infinite; }
+  @keyframes point { 0%,100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+  .sparkle1 { animation: sparkle 1.8s ease-in-out infinite; }
+  .sparkle2 { animation: sparkle 1.8s ease-in-out infinite 0.5s; }
+  @keyframes sparkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+
+  .slide-in-1 { animation: slideIn 0.6s ease-out 0.2s both; }
+  .slide-in-2 { animation: slideIn 0.6s ease-out 0.5s both; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  .wave1 { animation: wave 1.5s ease-in-out infinite; transform-origin: 205px 115px; }
+  .wave2 { animation: wave 1.5s ease-in-out infinite 0.2s; transform-origin: 235px 115px; }
+  @keyframes wave { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-10deg); } }
+  .confetti1 { animation: confettiDrop 2s ease-in-out infinite; }
+  .confetti2 { animation: confettiDrop 2s ease-in-out infinite 0.3s; }
+  .confetti3 { animation: confettiDrop 2s ease-in-out infinite 0.6s; }
+  .confetti4 { animation: confettiDrop 2s ease-in-out infinite 0.9s; }
+  @keyframes confettiDrop { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(25px) rotate(180deg); opacity: 0; } }
+
+  .signature { stroke-dasharray: 200; stroke-dashoffset: 200; animation: draw 2s ease-in-out forwards infinite; }
+  @keyframes draw { 0% { stroke-dashoffset: 200; } 60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+  .pen { animation: penMove 2s ease-in-out infinite; }
+  @keyframes penMove { 0% { opacity: 1; } 60% { opacity: 1; } 80% { opacity: 0; } 100% { opacity: 0; } }
+  .stamp { animation: stampIn 2s ease-in-out infinite; }
+  @keyframes stampIn { 0%,50% { opacity: 0; transform: scale(1.5); } 65% { opacity: 1; transform: scale(0.95); } 75%,100% { opacity: 1; transform: scale(1); } }
+
+  .money1 { animation: flyMoney 2.5s ease-in-out infinite; }
+  .money2 { animation: flyMoney 2.5s ease-in-out infinite 0.4s; }
+  .money3 { animation: flyMoney 2.5s ease-in-out infinite 0.8s; }
+  @keyframes flyMoney { 0% { transform: translateX(-30px); opacity: 0; } 30% { opacity: 1; } 70% { opacity: 1; } 100% { transform: translateX(30px); opacity: 0; } }
+  .dash-anim { stroke-dasharray: 6 3; animation: dashFlow 1s linear infinite; }
+  @keyframes dashFlow { to { stroke-dashoffset: -18; } }
+
+  /* ═══ FOOTER ═══ */
+  footer { padding: 3rem 2rem; border-top: 1px solid rgba(18,64,232,0.08); text-align: center; }
+  .footer-brand { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: 0.25rem; }
+  .footer-brand .green { color: var(--green-light); }
+  .footer-tagline { color: var(--green); font-size: 0.8rem; font-style: italic; margin-bottom: 0.75rem; }
+  footer p { color: var(--muted); font-size: 0.82rem; }
+  .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--blue-light); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 1024px) { .product-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .product-grid { grid-template-columns: 1fr; }
+    .stat-item h3 { font-size: 1.8rem; }
+    .form-container { padding: 2rem 1.25rem; }
+    .tf-question { font-size: 1.25rem; }
+    .tf-actions { flex-direction: column; }
+    .tf-actions .btn { width: 100%; justify-content: center; }
+    .tf-enter-hint { display: none; }
+    .tf-options-row { gap: 0.4rem; }
+    .tf-option-pill { padding: 0.45rem 0.8rem; font-size: 0.8rem; }
+    .tf-options-2x2 { grid-template-columns: 1fr; }
+    .tf-options-horizontal { grid-template-columns: 1fr; }
+    .highlight-value { font-size: 0.95rem; }
+    .scene-step.active { flex-direction: column; gap: 1.5rem; }
+    .scene-visual { flex: none; width: 100%; max-width: 260px; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo"><svg width="140" height="32" viewBox="0 0 140 32" fill="none"><text x="0" y="24" font-family="Outfit,sans-serif" font-weight="800" font-size="24" fill="#3b63f5">Vestor</text><text x="75" y="24" font-family="Outfit,sans-serif" font-weight="800" font-size="24" fill="#25b254">Fi</text><path d="M82 4 L85 1 L88 4 L88 9 L82 9 Z" stroke="#25b254" stroke-width="0.8" fill="none"/><path d="M88 4 L91 1 L94 4 L94 9 L88 9 Z" stroke="#25b254" stroke-width="0.8" fill="none"/><path d="M94 4 L97 1 L100 4 L100 9 L94 9 Z" stroke="#25b254" stroke-width="0.8" fill="none"/></svg></a>
+  <ul class="nav-links"><li><a href="#products">Loan Products</a></li><li><a href="#process">How It Works</a></li><li><a href="#apply">Apply Now</a></li><li><a href="#apply" class="nav-cta">Get a Quote</a></li></ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">⚡ Real Estate By You, Capital By Us</div>
+    <h1>Capital That Moves<br>at the Speed of <span class="blue">Your</span> <span class="green">Deals</span></h1>
+    <p class="hero-sub">Fast closings, competitive rates, and a team that actually understands your deals.</p>
+    <p class="hero-programs"><span>DSCR</span> · <span>RTL</span> · <span>Ground Up</span> · <span>Development Loans</span></p>
+    <p class="hero-byline">By real estate investors, for real estate investors.</p>
+    <div class="hero-actions">
+      <a href="#apply" class="btn btn-primary">Get Your Quote →</a>
+      <a href="#products" class="btn btn-outline">View Loan Programs</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-item"><h3>$250M+</h3><p>Loans Funded</p></div>
+    <div class="stat-item"><h3>48hr</h3><p>Avg. Pre-Approval</p></div>
+    <div class="stat-item"><h3>250+</h3><p>Deals Closed</p></div>
+    <div class="stat-item"><h3>90%</h3><p>Max LTV</p></div>
+  </div>
+</section>
+
+<div style="max-width:200px; margin:1.5rem auto; height:1px; background:linear-gradient(90deg,transparent,rgba(18,64,232,0.2),transparent);"></div>
+
+<!-- PRODUCTS — 4 horizontal -->
+<section class="products" id="products">
+  <div class="section-label">Loan Programs</div>
+  <h2 class="section-title">Flexible Capital for Every Strategy</h2>
+  <p class="section-sub">Whether you're buying, holding, flipping, or building — we've got the right financing.</p>
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-icon">🏘️</div>
+      <h3>DSCR Rental</h3>
+      <p>Qualify on property cash flow — no W-2, no tax returns.</p>
+      <div class="highlight-strip"><div class="highlight-item"><span class="highlight-value">6.5%</span><span class="highlight-label">Rates From</span></div><div class="highlight-item"><span class="highlight-value">80%</span><span class="highlight-label">Max LTV</span></div></div>
+      <ul class="product-features"><li>No income verification</li><li>30-yr fixed & ARM options</li><li>Close in entity name</li><li>Foreign nationals welcome</li></ul>
+      <a href="#apply" class="btn btn-primary" onclick="preSelect('dscr')">Get a Quote →</a>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">🔨</div>
+      <h3>Fix & Flip</h3>
+      <p>Fast capital for acquisitions and renovations. Close in days.</p>
+      <div class="highlight-strip"><div class="highlight-item"><span class="highlight-value">9.5%</span><span class="highlight-label">Rates From</span></div><div class="highlight-item"><span class="highlight-value">90%</span><span class="highlight-label">Of Purchase</span></div></div>
+      <ul class="product-features"><li>Close in as fast as 7 days</li><li>Up to 100% rehab financing</li><li>12–24 month terms</li><li>Draw-based disbursement</li></ul>
+      <a href="#apply" class="btn btn-primary" onclick="preSelect('fix-flip')">Get a Quote →</a>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">🏗️</div>
+      <h3>Development Loan</h3>
+      <p>Ground-up construction financing for new builds.</p>
+      <div class="highlight-strip"><div class="highlight-item"><span class="highlight-value">10%</span><span class="highlight-label">Rates From</span></div><div class="highlight-item"><span class="highlight-value">90%</span><span class="highlight-label">Max LTC</span></div></div>
+      <ul class="product-features"><li>Ground-up new construction</li><li>Phased draw schedules</li><li>Flexible 12–24 month terms</li><li>Single & multi-unit projects</li></ul>
+      <a href="#apply" class="btn btn-green" onclick="preSelect('development')">Get a Quote →</a>
+    </div>
+    <div class="product-card">
+      <div class="product-icon">🌎</div>
+      <h3>Vacant Land</h3>
+      <p>Acquire land for future development or long-term hold.</p>
+      <div class="highlight-strip"><div class="highlight-item"><span class="highlight-value">11%</span><span class="highlight-label">Rates From</span></div><div class="highlight-item"><span class="highlight-value">65%</span><span class="highlight-label">Max LTV</span></div></div>
+      <ul class="product-features"><li>Raw & entitled land</li><li>Quick closing available</li><li>Bridge to construction</li><li>Flexible exit strategies</li></ul>
+      <a href="#apply" class="btn btn-green" onclick="preSelect('vacant-land')">Get a Quote →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SEE OUR RATES CTA -->
+<section class="rates-cta">
+  <a href="#apply" class="rates-cta-btn">
+    <span>See Our Rates</span>
+    <div class="rates-cta-arrow"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+  </a>
+</section>
+
+<!-- ═══ 9-STEP FORM ═══ -->
+<section class="form-section" id="apply">
+  <div class="form-container">
+    <div class="tf-top-bar">
+      <div class="tf-progress"><div class="tf-progress-bar" id="progressBar"></div></div>
+      <div class="tf-progress-label" id="progressText">Step 1 of 9</div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="tf-step active" data-step="1">
+      <div class="tf-question">What type of loan do you need?</div>
+      <div class="tf-question-sub">Select the product that best fits your deal.</div>
+      <div class="tf-options tf-options-2x2" id="q-loantype">
+        <button class="tf-option" data-value="dscr" onclick="sel(this)"><span class="tf-option-icon">🏘️</span><span class="tf-option-text"><strong>DSCR Rental</strong><small>Buy & hold, cash flow</small></span></button>
+        <button class="tf-option" data-value="fix-flip" onclick="sel(this)"><span class="tf-option-icon">🔨</span><span class="tf-option-text"><strong>Fix & Flip</strong><small>Rehab & resell</small></span></button>
+        <button class="tf-option" data-value="development" onclick="sel(this)"><span class="tf-option-icon">🏗️</span><span class="tf-option-text"><strong>Development Loan</strong><small>Ground-up construction</small></span></button>
+        <button class="tf-option" data-value="vacant-land" onclick="sel(this)"><span class="tf-option-icon">🌎</span><span class="tf-option-text"><strong>Vacant Land</strong><small>Land acquisition</small></span></button>
+      </div>
+      <div class="tf-actions"><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button><div class="tf-enter-hint">press <kbd>Enter ↵</kbd></div></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="tf-step" data-step="2">
+      <div class="tf-question">Is this a purchase or refinance?</div>
+      <div class="tf-question-sub">This determines how we structure your quote.</div>
+      <div class="tf-options tf-options-horizontal" id="q-purpose">
+        <button class="tf-option" data-value="purchase" onclick="sel(this)"><span class="tf-option-icon">🔑</span><span class="tf-option-text"><strong>Purchase</strong></span></button>
+        <button class="tf-option" data-value="refinance" onclick="sel(this)"><span class="tf-option-icon">🔄</span><span class="tf-option-text"><strong>Refinance</strong></span></button>
+      </div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="tf-step" data-step="3">
+      <div class="tf-question">What's the property address?</div>
+      <div class="tf-question-sub">Full address or city & state if you're still looking.</div>
+      <div class="tf-field"><input type="text" id="q-address" placeholder="123 Main St, Miami, FL 33139" autocomplete="off"></div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="tf-step" data-step="4">
+      <div class="tf-question">What's your name?</div>
+      <div class="tf-question-sub">So we know who to prepare the quote for.</div>
+      <div class="tf-field"><input type="text" id="q-name" placeholder="First & last name"></div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="tf-step" data-step="5">
+      <div class="tf-question" id="label-price">What's the purchase price?</div>
+      <div class="tf-question-sub">Your best estimate is fine — we'll verify later.</div>
+      <div class="tf-field"><div class="tf-input-prefix"><span>$</span><input type="text" id="q-price" placeholder="450,000" oninput="fmtC(this)"></div></div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="tf-step" data-step="6">
+      <div class="tf-question">What LTV are you requesting?</div>
+      <div class="tf-question-sub">Select the leverage level for your deal.</div>
+      <div class="tf-options tf-options-row" id="q-ltv"></div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="tf-step" data-step="7">
+      <div class="tf-question">What's your estimated FICO score?</div>
+      <div class="tf-question-sub">This helps us find you the best rate.</div>
+      <div class="tf-options tf-options-row" id="q-fico">
+        <button class="tf-option-pill" data-value="780+" onclick="pill(this)">780+</button>
+        <button class="tf-option-pill" data-value="760-779" onclick="pill(this)">760–779</button>
+        <button class="tf-option-pill" data-value="740-759" onclick="pill(this)">740–759</button>
+        <button class="tf-option-pill" data-value="720-739" onclick="pill(this)">720–739</button>
+        <button class="tf-option-pill" data-value="700-719" onclick="pill(this)">700–719</button>
+        <button class="tf-option-pill" data-value="680-699" onclick="pill(this)">680–699</button>
+        <button class="tf-option-pill" data-value="660-679" onclick="pill(this)">660–679</button>
+        <button class="tf-option-pill" data-value="640-659" onclick="pill(this)">640–659</button>
+        <button class="tf-option-pill" data-value="below-640" onclick="pill(this)">Below 640</button>
+      </div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="tf-step" data-step="8">
+      <div class="tf-question">What's your email address?</div>
+      <div class="tf-question-sub">We'll send your custom quote here.</div>
+      <div class="tf-field"><input type="email" id="q-email" placeholder="you@email.com"></div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-primary" onclick="next()">Continue <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="tf-step" data-step="9">
+      <div class="tf-question">Last step — how should we reach you?</div>
+      <div class="tf-question-sub">We'll have a quote ready within 24 hours.</div>
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="tf-field"><label class="tf-field-label">Phone number</label><input type="tel" id="q-phone" placeholder="(305) 555-0100" oninput="fmtP(this)"></div>
+        <div><label class="tf-field-label">Preferred method of communication</label>
+          <div class="tf-options tf-options-row" id="q-contact">
+            <button class="tf-option-pill" data-value="call" onclick="pill(this)">📞 Call</button>
+            <button class="tf-option-pill" data-value="text" onclick="pill(this)">💬 Text</button>
+            <button class="tf-option-pill" data-value="email" onclick="pill(this)">📧 Email</button>
+            <button class="tf-option-pill" data-value="whatsapp" onclick="pill(this)">📱 WhatsApp</button>
+          </div>
+        </div>
+        <div id="q-construction-wrap" style="display:none;">
+          <label class="tf-field-label">Do you need construction financing?</label>
+          <div class="tf-options tf-options-horizontal" id="q-construction">
+            <button class="tf-option" data-value="yes" onclick="sel(this)"><span class="tf-option-icon">✅</span><span class="tf-option-text"><strong>Yes</strong></span></button>
+            <button class="tf-option" data-value="no" onclick="sel(this)"><span class="tf-option-icon">❌</span><span class="tf-option-text"><strong>No</strong></span></button>
+          </div>
+        </div>
+      </div>
+      <div class="tf-actions"><button class="btn btn-outline" onclick="prev()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back</button><button class="btn btn-green" onclick="submit()">Get My Quote →</button></div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="tf-step" data-step="done">
+      <div class="tf-success">
+        <div class="tf-success-check">✓</div>
+        <h2>You're All Set!</h2>
+        <p>A VestorFi loan advisor will reach out within 24 hours with a custom quote for your deal.</p>
+        <div class="tf-success-details" id="successDetails"></div>
+        <a href="#products" class="btn btn-outline" style="margin-top:1.5rem;">View Our Loan Programs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS — Animated Process ═══ -->
+<section class="process-section" id="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">From Quote to Funded — In Days, Not Months</h2>
+  <p class="section-sub">See how simple it is to get your deal funded with VestorFi.</p>
+
+  <div class="process-video">
+    <div class="process-screen">
+      <!-- Animated scene -->
+      <div class="scene" id="scene">
+
+        <!-- STEP 1: Get a Quote -->
+        <div class="scene-step active" data-scene="1">
+          <div class="scene-visual">
+            <svg viewBox="0 0 280 200" class="cartoon">
+              <!-- Desk -->
+              <rect x="60" y="130" width="160" height="8" rx="4" fill="#243052"/>
+              <!-- Laptop -->
+              <rect x="95" y="90" width="90" height="55" rx="6" fill="#151d35" stroke="#3b63f5" stroke-width="2"/>
+              <rect x="100" y="95" width="80" height="40" rx="3" fill="#0c1225"/>
+              <!-- Screen content -->
+              <rect x="108" y="102" width="30" height="4" rx="2" fill="#3b63f5" class="blink"/>
+              <rect x="108" y="110" width="55" height="3" rx="1.5" fill="#243052"/>
+              <rect x="108" y="117" width="45" height="3" rx="1.5" fill="#243052"/>
+              <rect x="108" y="124" width="20" height="8" rx="4" fill="#25b254" class="pulse-green"/>
+              <!-- Laptop base -->
+              <rect x="80" y="138" width="120" height="6" rx="3" fill="#1e293b"/>
+              <!-- Character -->
+              <circle cx="50" cy="100" r="18" fill="#3b63f5" class="bob"/>
+              <circle cx="50" cy="85" r="12" fill="#f0f4ff"/>
+              <circle cx="46" cy="83" r="2" fill="#151d35"/>
+              <circle cx="54" cy="83" r="2" fill="#151d35"/>
+              <path d="M45 88 Q50 92 55 88" stroke="#151d35" stroke-width="1.5" fill="none"/>
+              <!-- Smile -->
+              <rect x="42" y="76" width="5" height="2" rx="1" fill="#151d35" transform="rotate(-10 44 77)"/>
+              <rect x="52" y="76" width="5" height="2" rx="1" fill="#151d35" transform="rotate(10 54 77)"/>
+              <!-- Hand pointing -->
+              <line x1="65" y1="100" x2="95" y2="110" stroke="#f0f4ff" stroke-width="3" stroke-linecap="round" class="point"/>
+              <!-- Sparkles -->
+              <text x="200" y="85" font-size="16" class="sparkle1">✨</text>
+              <text x="170" y="75" font-size="12" class="sparkle2">⚡</text>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <div class="scene-num">01</div>
+            <h3>Get a Quote</h3>
+            <p>Fill out our quick form — takes less than 60 seconds. Tell us about your deal and we'll start working on your custom terms.</p>
+          </div>
+        </div>
+
+        <!-- STEP 2: Receive Terms -->
+        <div class="scene-step" data-scene="2">
+          <div class="scene-visual">
+            <svg viewBox="0 0 280 200" class="cartoon">
+              <!-- Phone notification -->
+              <rect x="100" y="30" width="80" height="140" rx="14" fill="#151d35" stroke="#3b63f5" stroke-width="2"/>
+              <rect x="106" y="45" width="68" height="110" rx="4" fill="#0c1225"/>
+              <!-- Notification cards -->
+              <rect x="112" y="55" width="56" height="28" rx="6" fill="rgba(18,64,232,0.15)" stroke="#3b63f5" stroke-width="1" class="slide-in-1"/>
+              <text x="118" y="67" font-size="5" fill="#3b63f5" font-weight="700" font-family="Outfit,sans-serif">TERM SHEET</text>
+              <text x="118" y="76" font-size="4" fill="#8a95b0" font-family="DM Sans,sans-serif">Rate: 7.25% · 30yr</text>
+              <rect x="112" y="90" width="56" height="28" rx="6" fill="rgba(26,138,63,0.15)" stroke="#25b254" stroke-width="1" class="slide-in-2"/>
+              <text x="118" y="102" font-size="5" fill="#25b254" font-weight="700" font-family="Outfit,sans-serif">APPROVED</text>
+              <text x="118" y="111" font-size="4" fill="#8a95b0" font-family="DM Sans,sans-serif">LTV: 75% · $337,500</text>
+              <rect x="112" y="125" width="56" height="20" rx="10" fill="#25b254" class="pulse-green"/>
+              <text x="122" y="138" font-size="5.5" fill="white" font-weight="700" font-family="Outfit,sans-serif">Accept →</text>
+              <!-- Character celebrating -->
+              <circle cx="220" cy="120" r="18" fill="#25b254" class="bob"/>
+              <circle cx="220" cy="105" r="12" fill="#f0f4ff"/>
+              <circle cx="216" cy="103" r="2" fill="#151d35"/>
+              <circle cx="224" cy="103" r="2" fill="#151d35"/>
+              <path d="M215 108 Q220 113 225 108" stroke="#151d35" stroke-width="1.5" fill="none"/>
+              <!-- Arms up -->
+              <line x1="205" y1="115" x2="195" y2="95" stroke="#f0f4ff" stroke-width="3" stroke-linecap="round" class="wave1"/>
+              <line x1="235" y1="115" x2="245" y2="95" stroke="#f0f4ff" stroke-width="3" stroke-linecap="round" class="wave2"/>
+              <!-- Confetti -->
+              <circle cx="195" cy="80" r="3" fill="#3b63f5" class="confetti1"/>
+              <circle cx="245" cy="75" r="2.5" fill="#25b254" class="confetti2"/>
+              <rect x="210" y="70" width="6" height="3" rx="1.5" fill="#f0f4ff" transform="rotate(30 213 71)" class="confetti3"/>
+              <circle cx="230" cy="78" r="2" fill="#3b63f5" class="confetti4"/>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <div class="scene-num">02</div>
+            <h3>Receive Your Terms</h3>
+            <p>Within 24 hours, you'll get a custom term sheet with your rate, LTV, and loan amount — no surprises, no hidden fees.</p>
+          </div>
+        </div>
+
+        <!-- STEP 3: Sign Documents -->
+        <div class="scene-step" data-scene="3">
+          <div class="scene-visual">
+            <svg viewBox="0 0 280 200" class="cartoon">
+              <!-- Document -->
+              <rect x="85" y="30" width="110" height="140" rx="6" fill="#f0f4ff"/>
+              <rect x="95" y="45" width="60" height="5" rx="2.5" fill="#243052"/>
+              <rect x="95" y="55" width="80" height="3" rx="1.5" fill="#d8dff0"/>
+              <rect x="95" y="62" width="75" height="3" rx="1.5" fill="#d8dff0"/>
+              <rect x="95" y="69" width="65" height="3" rx="1.5" fill="#d8dff0"/>
+              <rect x="95" y="76" width="80" height="3" rx="1.5" fill="#d8dff0"/>
+              <rect x="95" y="83" width="50" height="3" rx="1.5" fill="#d8dff0"/>
+              <!-- Signature line -->
+              <line x1="95" y1="130" x2="175" y2="130" stroke="#243052" stroke-width="1" stroke-dasharray="4 2"/>
+              <text x="95" y="142" font-size="5" fill="#8a95b0" font-family="DM Sans,sans-serif">Borrower Signature</text>
+              <!-- Animated signature -->
+              <path d="M100 127 Q110 115 120 127 Q130 138 140 122 Q145 118 150 125" stroke="#3b63f5" stroke-width="2" fill="none" stroke-linecap="round" class="signature"/>
+              <!-- Pen -->
+              <line x1="150" y1="125" x2="165" y2="105" stroke="#3b63f5" stroke-width="3" stroke-linecap="round" class="pen"/>
+              <circle cx="165" cy="105" r="2" fill="#25b254" class="pen"/>
+              <!-- Checkmark stamp -->
+              <circle cx="220" cy="90" r="22" fill="none" stroke="#25b254" stroke-width="2.5" class="stamp"/>
+              <path d="M210 90 L217 97 L232 82" stroke="#25b254" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" class="stamp"/>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <div class="scene-num">03</div>
+            <h3>Sign Your Docs</h3>
+            <p>E-sign your loan documents from anywhere. No printing, no faxing — just a few clicks and you're locked in.</p>
+          </div>
+        </div>
+
+        <!-- STEP 4: Get Funded -->
+        <div class="scene-step" data-scene="4">
+          <div class="scene-visual">
+            <svg viewBox="0 0 280 200" class="cartoon">
+              <!-- Bank building -->
+              <rect x="30" y="90" width="80" height="70" rx="4" fill="#151d35" stroke="#243052" stroke-width="1.5"/>
+              <polygon points="70 55 25 90 115 90" fill="#151d35" stroke="#243052" stroke-width="1.5"/>
+              <rect x="45" y="105" width="12" height="20" rx="2" fill="#243052"/>
+              <rect x="63" y="105" width="12" height="20" rx="2" fill="#243052"/>
+              <rect x="81" y="105" width="12" height="20" rx="2" fill="#243052"/>
+              <text x="48" y="85" font-size="7" fill="#3b63f5" font-weight="800" font-family="Outfit,sans-serif">VESTORFI</text>
+              <!-- Money flying -->
+              <g class="money1">
+                <rect x="140" y="70" width="35" height="20" rx="3" fill="#25b254"/>
+                <text x="150" y="84" font-size="11" fill="white" font-weight="800">$</text>
+              </g>
+              <g class="money2">
+                <rect x="155" y="100" width="35" height="20" rx="3" fill="#25b254"/>
+                <text x="165" y="114" font-size="11" fill="white" font-weight="800">$</text>
+              </g>
+              <g class="money3">
+                <rect x="145" y="130" width="35" height="20" rx="3" fill="#25b254"/>
+                <text x="155" y="144" font-size="11" fill="white" font-weight="800">$</text>
+              </g>
+              <!-- Arrow -->
+              <line x1="120" y1="110" x2="185" y2="110" stroke="#3b63f5" stroke-width="2.5" stroke-dasharray="6 3" class="dash-anim"/>
+              <!-- Property -->
+              <rect x="200" y="95" width="55" height="50" rx="4" fill="#151d35" stroke="#25b254" stroke-width="2"/>
+              <polygon points="227.5 65 195 95 260 95" fill="#151d35" stroke="#25b254" stroke-width="2"/>
+              <rect x="215" y="110" width="15" height="20" rx="2" fill="#25b254" opacity="0.3"/>
+              <rect x="235" y="105" width="10" height="10" rx="1" fill="#3b63f5" opacity="0.3"/>
+              <!-- FUNDED stamp -->
+              <rect x="195" y="150" width="65" height="22" rx="11" fill="#25b254" class="pulse-green"/>
+              <text x="209" y="165" font-size="8" fill="white" font-weight="800" font-family="Outfit,sans-serif">FUNDED</text>
+            </svg>
+          </div>
+          <div class="scene-label">
+            <div class="scene-num">04</div>
+            <h3>Get Funded</h3>
+            <p>Funds hit your title company fast. DSCR in ~21 days, bridge loans in as little as 7. Your deal is done.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Playback controls -->
+      <div class="scene-controls">
+        <div class="scene-dots">
+          <button class="scene-dot active" onclick="goScene(1)"></button>
+          <button class="scene-dot" onclick="goScene(2)"></button>
+          <button class="scene-dot" onclick="goScene(3)"></button>
+          <button class="scene-dot" onclick="goScene(4)"></button>
+        </div>
+        <div class="scene-nav">
+          <button class="scene-btn" onclick="prevScene()">‹</button>
+          <span class="scene-counter" id="sceneCounter">1 / 4</span>
+          <button class="scene-btn" onclick="nextScene()">›</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="#apply" class="btn btn-primary">Start Your Quote Now →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Vestor<span class="green">Fi</span></div>
+  <div class="footer-tagline">Real Estate By You, Capital By Us</div>
+  <p>&copy; 2026 VestorFi. All rights reserved. NMLS# XXXXXX</p>
+  <div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Contact Us</a></div>
+</footer>
+
+<script>
+let S = 1;
+const T = 9;
+
+function gv(id) { return document.querySelector(`#${id} .tf-option.selected`)?.dataset.value || ''; }
+function isDSCR() { return gv('q-loantype') === 'dscr'; }
+function needsConst() { const l = gv('q-loantype'); return l==='fix-flip'||l==='development'||l==='vacant-land'; }
+
+// Progress: after step 3, bar jumps past halfway
+function prog(s) {
+  const bar = document.getElementById('progressBar');
+  const txt = document.getElementById('progressText');
+  // Steps 1-3 → 11%, 22%, 33%  |  Steps 4-9 → 55%, 64%, 73%, 82%, 91%, 100%
+  let pct;
+  if (s <= 3) pct = Math.round((s / T) * 100);
+  else pct = 55 + Math.round(((s - 4) / (T - 4)) * 45);
+  bar.style.width = pct + '%';
+  txt.textContent = `Step ${s} of ${T}`;
+}
+
+function show(s) {
+  document.querySelectorAll('.tf-step').forEach(e => e.classList.remove('active'));
+  const el = document.querySelector(`.tf-step[data-step="${s}"]`);
+  if (el) { el.classList.add('active'); S = s; prog(s); }
+  setTimeout(() => { const inp = el?.querySelector('input'); if (inp) inp.focus(); }, 250);
+}
+
+function prep(s) {
+  if (s === 5) {
+    document.getElementById('label-price').textContent =
+      gv('q-purpose') === 'refinance' ? "What's the current market value?" : "What's the purchase price?";
+  }
+  if (s === 6) {
+    const max = isDSCR() ? 80 : 90;
+    let h = '';
+    for (let p = 50; p <= max; p += 5) h += `<button class="tf-option-pill" data-value="${p}" onclick="pill(this)">${p}%</button>`;
+    document.getElementById('q-ltv').innerHTML = h;
+  }
+  if (s === 9) {
+    document.getElementById('q-construction-wrap').style.display = needsConst() ? 'block' : 'none';
+  }
+}
+
+function next() { prep(S + 1); show(S + 1); }
+function prev() { if (S > 1) show(S - 1); }
+
+function sel(el) {
+  el.closest('.tf-options,.tf-options-2x2,.tf-options-horizontal').querySelectorAll('.tf-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function pill(el) {
+  el.closest('.tf-options-row').querySelectorAll('.tf-option-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function fmtC(i) { let v = i.value.replace(/[^0-9]/g,''); if(v) v=parseInt(v).toLocaleString('en-US'); i.value=v; }
+function fmtP(i) { let v=i.value.replace(/\D/g,''); if(v.length<=3) v=v.length?`(${v}`:''; else if(v.length<=6) v=`(${v.slice(0,3)}) ${v.slice(3)}`; else v=`(${v.slice(0,3)}) ${v.slice(3,6)}-${v.slice(6,10)}`; i.value=v; }
+
+function submit() {
+  const d = {
+    loanType: gv('q-loantype'), purpose: gv('q-purpose'),
+    address: document.getElementById('q-address').value,
+    name: document.getElementById('q-name').value,
+    price: document.getElementById('q-price').value,
+    ltv: document.querySelector('#q-ltv .selected')?.dataset.value||'',
+    fico: document.querySelector('#q-fico .selected')?.dataset.value||'',
+    email: document.getElementById('q-email').value,
+    phone: document.getElementById('q-phone').value,
+    contact: document.querySelector('#q-contact .selected')?.dataset.value||'',
+    construction: document.querySelector('#q-construction .tf-option.selected')?.dataset.value||'n/a'
+  };
+  document.querySelectorAll('.tf-step').forEach(e => e.classList.remove('active'));
+  document.querySelector('[data-step="done"]').classList.add('active');
+  document.querySelector('.tf-top-bar').style.display = 'none';
+  const lb = {dscr:'DSCR Rental','fix-flip':'Fix & Flip',development:'Development','vacant-land':'Vacant Land'};
+  document.getElementById('successDetails').innerHTML = `
+    <span class="tf-success-tag">${lb[d.loanType]||'—'}</span>
+    <span class="tf-success-tag">${d.purpose==='purchase'?'🔑 Purchase':'🔄 Refinance'}</span>
+    <span class="tf-success-tag">$${d.price||'—'} · ${d.ltv}% LTV</span>
+    <span class="tf-success-tag">📍 ${d.address||'TBD'}</span>`;
+  console.log('Quote submitted:', d);
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Enter'){e.preventDefault(); S<T?next():submit();} });
+
+function preSelect(type) {
+  setTimeout(() => {
+    document.querySelectorAll('#q-loantype .tf-option').forEach(b => { b.classList.remove('selected'); if(b.dataset.value===type) b.classList.add('selected'); });
+  }, 300);
+}
+
+document.querySelector('.nav-cta')?.addEventListener('click', e => { e.preventDefault(); document.getElementById('apply').scrollIntoView({behavior:'smooth'}); });
+window.addEventListener('scroll', () => { document.querySelector('nav').style.background = window.scrollY>50 ? 'rgba(6,11,24,0.95)' : 'rgba(6,11,24,0.88)'; });
+prog(1);
+
+// ═══ SCENE / VIDEO NAV ═══
+let currentScene = 1;
+const totalScenes = 4;
+let autoplayTimer;
+
+function goScene(n) {
+  currentScene = n;
+  document.querySelectorAll('.scene-step').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.scene-step[data-scene="${n}"]`).classList.add('active');
+  document.querySelectorAll('.scene-dot').forEach((d,i) => d.classList.toggle('active', i===n-1));
+  document.getElementById('sceneCounter').textContent = `${n} / ${totalScenes}`;
+  resetAutoplay();
+}
+function nextScene() { goScene(currentScene >= totalScenes ? 1 : currentScene + 1); }
+function prevScene() { goScene(currentScene <= 1 ? totalScenes : currentScene - 1); }
+function resetAutoplay() { clearInterval(autoplayTimer); autoplayTimer = setInterval(nextScene, 5000); }
+resetAutoplay();
+</script>
+</body>
+</html>
