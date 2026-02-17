@@ -729,6 +729,51 @@ function submit() {
     contact: document.querySelector('#q-contact .selected')?.dataset.value||'',
     construction: document.querySelector('#q-construction .tf-option.selected')?.dataset.value||'n/a'
   };
+
+  // Split name into first/last
+  const nameParts = d.name.trim().split(/\s+/);
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || '';
+
+  // Map loan type values to match HubSpot dropdown labels
+  const loanTypeMap = { 'dscr':'DSCR Rental', 'fix-flip':'Fix & Flip', 'development':'Development', 'vacant-land':'Vacant Land' };
+  const purposeMap = { 'purchase':'Purchase', 'refinance':'Refinance' };
+  const contactMap = { 'call':'Call', 'text':'Text', 'email':'Email', 'whatsapp':'Whatsapp' };
+  const constructionMap = { 'yes':'Yes', 'no':'No' };
+
+  // HubSpot form submission
+  const portalId = '243428105';
+  const formId = '88dd5847-6649-454c-97b1-ddde9c900470';
+
+  fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      fields: [
+        { name: 'email', value: d.email },
+        { name: 'firstname', value: firstName },
+        { name: 'lastname', value: lastName },
+        { name: 'phone', value: d.phone },
+        { name: 'loan_type', value: loanTypeMap[d.loanType] || d.loanType },
+        { name: 'loan_purpose', value: purposeMap[d.purpose] || d.purpose },
+        { name: 'subject_property_address', value: d.address },
+        { name: 'purchase_price_market_value', value: d.price },
+        { name: 'ltv_requested', value: d.ltv },
+        { name: 'fico_borrower_score', value: d.fico },
+        { name: 'contact_method', value: contactMap[d.contact] || d.contact },
+        { name: 'construction_financing', value: constructionMap[d.construction] || '' },
+      ],
+      context: {
+        pageUri: window.location.href,
+        pageName: 'VestorFi - Get a Quote'
+      }
+    })
+  }).then(r => {
+    if (!r.ok) console.error('HubSpot error:', r.status);
+    else console.log('HubSpot submission successful');
+  }).catch(err => console.error('HubSpot error:', err));
+
+  // Show success screen
   document.querySelectorAll('.tf-step').forEach(e => e.classList.remove('active'));
   document.querySelector('[data-step="done"]').classList.add('active');
   document.querySelector('.tf-top-bar').style.display = 'none';
@@ -738,7 +783,6 @@ function submit() {
     <span class="tf-success-tag">${d.purpose==='purchase'?'🔑 Purchase':'🔄 Refinance'}</span>
     <span class="tf-success-tag">$${d.price||'—'} · ${d.ltv}% LTV</span>
     <span class="tf-success-tag">📍 ${d.address||'TBD'}</span>`;
-  console.log('Quote submitted:', d);
 }
 
 document.addEventListener('keydown', e => { if(e.key==='Enter'){e.preventDefault(); S<T?next():submit();} });
